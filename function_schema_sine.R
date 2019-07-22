@@ -98,7 +98,8 @@ schema_sine <- function(
     data = data_graph %>% filter(projet, age == 0),
     mapping = aes(y = age - 0.4, colour = cohorte),
     label = "(projet)",
-    size = 3
+    size = 3,
+    show.legend = FALSE
   ) +
   # interrogation entreprise (carré)
   geom_point(
