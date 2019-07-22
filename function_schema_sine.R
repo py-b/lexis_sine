@@ -158,23 +158,3 @@ schema_sine <- function(
   )
 
 }
-
-# APPEL -------------------------------------------------------------------
-
-# g <- 
-# schema_sine(
-#   2002,
-#   2020,
-#   cohorte_proj1 = 2018
-# )
-
-# SAVE --------------------------------------------------------------------
-
-# ggsave("lexis_sine_full.png", g, width = 7.5, height = 3.5)
-# ggsave("lexis_sine_100dpi.png", g, width = 7.5, height = 3.5, dpi = 100)
-# ggsave("lexis_sine_150dpi.png", g, width = 7.5, height = 3.5, dpi = 150)
-# ggsave("lexis_sine_200dpi.png", g, width = 7.5, height = 3.5, dpi = 200)
-# ggsave("lexis_sine_300dpi.png", g, width = 7.5, height = 3.5, dpi = 300)
-
-# ggsave("lexis_auto_300dpi.png", g, width = 6, height = 3.5, dpi = 300)
-# ggsave("lexis_auto_150dpi.png", g, width = 6, height = 3.5, dpi = 150)
