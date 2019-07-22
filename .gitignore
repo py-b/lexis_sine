@@ -1,3 +1,8 @@
 *.png
 *.url
 Thumbs.db
+.Rproj.user
+.Rprofile
+.Rhistory
+.RData
+.Ruserdata
