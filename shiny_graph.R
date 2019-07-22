@@ -57,6 +57,13 @@ ui <- fluidPage(
         width = "80%"
       ),
       
+      selectInput(
+        inputId = "theme",
+        label = "Apparence",
+        choices = ggplot_themes,
+        selected = "minimal"
+      ),
+      
       downloadButton(
         outputId = "sauv_img",
         label = "Export image"
@@ -95,7 +102,8 @@ server <- function(input, output, session) {
       as.integer(input$bornes[1]),
       as.integer(input$bornes[2]),
       cohorte_proj1 = proj,
-      cohorte_drop = drop
+      cohorte_drop = drop,
+      theme = input$theme
     )
   })
   

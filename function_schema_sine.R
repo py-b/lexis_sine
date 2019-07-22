@@ -13,6 +13,9 @@ couleurs <- setNames(
   as.character(seq(1994, 2033, by = 4))
 )
 
+ggplot_themes <-
+  c("bw", "classic", "dark", "grey", "light", "linedraw", "minimal")
+
 data_full <- 
   tibble(
     annee = annees_full,
@@ -31,7 +34,8 @@ schema_sine <- function(
   annee1,
   annee2,
   cohorte_proj1, # première cohorte non commencée
-  cohorte_drop = NULL # pour masquer une cohorte sur le graphique
+  cohorte_drop = NULL, # pour masquer une cohorte sur le graphique
+  theme = "minimal" # ?ggplot2::theme_minimal
 ) {
   
   if (missing(cohorte_proj1)) cohorte_proj1 <- 2100
@@ -136,6 +140,8 @@ schema_sine <- function(
     values = couleurs[cohortes],
     name = "Cohorte"
   ) +
+  # theme général
+  eval(parse(text = paste0("theme_", theme, "()"))) +
   # cosmétique axes et légende
   theme(
     axis.text.x = element_text(angle = 50, hjust = 1, vjust = 0.5),
