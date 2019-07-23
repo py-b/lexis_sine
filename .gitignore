@@ -1,5 +1,6 @@
-*.png
+/*.png
 *.url
+*.html
 Thumbs.db
 .Rproj.user
 .Rprofile
