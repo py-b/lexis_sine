@@ -1,5 +1,6 @@
 library(tibble)
 library(ggplot2)
+library(ggthemes)
 library(dplyr)
 
 
@@ -14,7 +15,9 @@ couleurs <- setNames(
 )
 
 ggplot_themes <-
-  c("bw", "classic", "dark", "grey", "light", "linedraw", "minimal")
+  c("base", "bw", "calc", "classic", "clean", "economist", "excel", 
+    "gdocs", "fivethirtyeight", "grey", "hc", "light", "linedraw", "minimal",
+    "pander", "solarized", "tufte")
 
 data_full <- 
   tibble(
@@ -140,7 +143,7 @@ schema_sine <- function(
     values = couleurs[cohortes],
     name = "Cohorte"
   ) +
-  # theme général
+  # apparence générale (ggtheme)
   eval(parse(text = paste0("theme_", theme, "()"))) +
   # cosmétique axes et légende
   theme(

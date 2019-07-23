@@ -9,7 +9,6 @@ source("function_schema_sine.R")
 
 # UI ----------------------------------------------------------------------
 
-
 ui <- fluidPage(
 
   titlePanel("Générateur calendrier Sine"),
@@ -83,7 +82,6 @@ ui <- fluidPage(
 
 # SERVER ------------------------------------------------------------------
 
-
 server <- function(input, output, session) {
   
   cohortes_graph <- reactive(
@@ -106,6 +104,15 @@ server <- function(input, output, session) {
       theme = input$theme
     )
   })
+  
+  dim_png <- reactive(
+    if (input$theme %in% c("economist", "fivethirtyeight", "hc")) {
+      # plus haut si légende en haut ou en bas
+      list(width = 7.5, height = 5.1)
+    } else {
+      list(width = 7.5, height = 3.5)
+    }
+  )
   
   observe({
     updateSelectInput(
@@ -133,7 +140,14 @@ server <- function(input, output, session) {
     filename = function() {
       sprintf("schema_sine_%s-%s.png", input$bornes[1], input$bornes[2])
     },
-    content = function(file) ggsave(file, graph(), width = 7.5, height = 3.5)
+    content = function(file) {
+      ggsave(
+        file,
+        graph(),
+        width = dim_png()$width,
+        height = dim_png()$height
+      )
+    }
   )
   
   observeEvent(input$bQuit, {
@@ -145,6 +159,5 @@ server <- function(input, output, session) {
 
 
 # RUN APP -----------------------------------------------------------------
-
 
 shinyApp(ui, server)
