@@ -2,6 +2,7 @@
 *.url
 *.html
 Thumbs.db
+schema_R_pYb.Rproj
 .Rproj.user
 .Rprofile
 .Rhistory
