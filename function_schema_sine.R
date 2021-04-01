@@ -15,11 +15,11 @@ couleurs <- setNames(
 )
 
 ggplot_themes <-
-  c("base", "bw", "calc", "classic", "clean", "economist", "excel", 
+  c("base", "bw", "calc", "classic", "clean", "economist", "excel",
     "gdocs", "fivethirtyeight", "grey", "hc", "light", "linedraw", "minimal",
     "pander", "solarized", "tufte")
 
-data_full <- 
+data_full <-
   tibble(
     annee = annees_full,
     age = rep(
@@ -27,7 +27,7 @@ data_full <-
       length.out = max(annees_full) - min(annees_full) + 1
     ),
     cohorte = as.character(annee - age)
-  ) %>% 
+  ) %>%
   filter(!is.na(age), cohorte != "1990")
 
 
@@ -40,17 +40,17 @@ schema_sine <- function(
   cohorte_drop = NULL, # pour masquer une cohorte sur le graphique
   theme = "minimal" # ?ggplot2::theme_minimal
 ) {
-  
+
   if (missing(cohorte_proj1)) cohorte_proj1 <- 2100
-  
+
   ## toutes années de toutes cohortes présentes dans années sélectionnées
-  cohortes <- 
+  cohortes <-
     data_full %>%
     filter(annee %>% between(annee1, annee2)) %>%
     `[[`("cohorte") %>%
     unique()
   data_graph <- data_full %>% filter(cohorte %in% cohortes)
-  
+
   ## ajout points fictifs en 2100 pour prolongation des traits obliques
   data_graph <-
     bind_rows(
@@ -62,11 +62,11 @@ schema_sine <- function(
       )
     ) %>%
     mutate(projet = as.numeric(cohorte) >= cohorte_proj1)
-  
+
   if (!is.null(cohorte_drop))
     data_graph <-
       data_graph %>%
-      filter(!cohorte %in% as.character(cohorte_drop)) 
+      filter(!cohorte %in% as.character(cohorte_drop))
 
   ## plot
 

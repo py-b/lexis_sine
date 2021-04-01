@@ -15,18 +15,18 @@ next_proj <- (annee_courante + 2) %/% 4 * 4 + 2
 ui <- fluidPage(
 
   titlePanel("Générateur calendrier Sine"),
-  
+
   sidebarLayout(
-    
+
     sidebarPanel(
-      
+
       useShinyjs(),
-    
+
       extendShinyjs(
         text = jscode,
         functions = c("closeWindow")
       ),
-      
+
       sliderInput(
         inputId = "bornes",
         label = "Période",
@@ -35,58 +35,58 @@ ui <- fluidPage(
         value = c(1998, 2020),
         sep = ""
       ),
-      
+
       selectInput(
         inputId = "proj",
         label = "Première cohorte pas encore enquêtée",
         choices = next_proj
       ),
-      
+
       selectInput(
         inputId = "drop",
         label = "Masquer une cohorte",
         choices = "<aucune>"
       )
-      
+
     ),
-    
+
     mainPanel(
-      
+
       h3("Prévisualisation"),
-      
+
       plotOutput(
         outputId = "graphique",
         width = "80%"
       ),
-      
+
       selectInput(
         inputId = "theme",
         label = "Apparence",
         choices = ggplot_themes,
         selected = "minimal"
       ),
-      
+
       downloadButton(
         outputId = "sauv_img",
         label = "Export image"
       ),
-      
+
       actionButton(
         inputId = "bQuit",
         label = "Quitter"
       )
-      
+
     )
-    
+
   )
 
-)  
+)
 
 
 # SERVER ------------------------------------------------------------------
 
 server <- function(input, output, session) {
-  
+
   cohortes_graph <- reactive(
     data_full %>%
     filter(annee %>% between(input$bornes[1], input$bornes[2])) %>%
@@ -95,7 +95,7 @@ server <- function(input, output, session) {
     sort %>%
     c("<aucune>", .)
   )
-  
+
   graph <- reactive({
     drop <- if(input$drop == "<aucune>") NULL else as.integer(input$drop)
     proj <- if(input$proj == "<aucune>") 2100 else as.integer(input$proj)
@@ -107,7 +107,7 @@ server <- function(input, output, session) {
       theme = input$theme
     )
   })
-  
+
   dim_png <- reactive(
     if (input$theme %in% c("economist", "fivethirtyeight", "hc")) {
       # plus haut si légende en haut ou en bas
@@ -116,7 +116,7 @@ server <- function(input, output, session) {
       list(width = 7.5, height = 3.5)
     }
   )
-  
+
   observe({
     updateSelectInput(
       session,
@@ -125,7 +125,7 @@ server <- function(input, output, session) {
       selected = if (next_proj %in% cohortes_graph()) next_proj else "<aucune>"
     )
   })
-  
+
   observe({
     updateSelectInput(
       session,
@@ -134,11 +134,11 @@ server <- function(input, output, session) {
       selected = "<aucune>"
     )
   })
-  
+
   output$graphique <- renderPlot(
     graph()
   )
-  
+
   output$sauv_img <- downloadHandler(
     filename = function() {
       sprintf("schema_sine_%s-%s.png", input$bornes[1], input$bornes[2])
@@ -152,12 +152,12 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   observeEvent(input$bQuit, {
     js$closeWindow()
     stopApp()
   })
-  
+
 }
 
 
