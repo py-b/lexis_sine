@@ -6,6 +6,9 @@ jscode <- "shinyjs.closeWindow = function() { window.close(); }"
 options(encoding = "UTF-8")
 source("function_schema_sine.R")
 
+annee_courante <- as.integer(format(Sys.Date(), "%Y"))
+next_proj <- (annee_courante + 2) %/% 4 * 4 + 2
+
 
 # UI ----------------------------------------------------------------------
 
@@ -36,7 +39,7 @@ ui <- fluidPage(
       selectInput(
         inputId = "proj",
         label = "Première cohorte pas encore enquêtée",
-        choices = "<aucune>"
+        choices = next_proj
       ),
       
       selectInput(
@@ -119,7 +122,7 @@ server <- function(input, output, session) {
       session,
       inputId = "proj",
       choices = cohortes_graph(),
-      selected = "<aucune>"
+      selected = if (next_proj %in% cohortes_graph()) next_proj else "<aucune>"
     )
   })
   
