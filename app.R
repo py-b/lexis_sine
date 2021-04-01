@@ -32,7 +32,7 @@ ui <- fluidPage(
         label = "Période",
         min = 1994,
         max = 2030,
-        value = c(1998, 2020),
+        value = c(2008, 2026),
         sep = ""
       ),
 
